@@ -54,7 +54,7 @@ export function Navbar() {
                 "text-sm uppercase tracking-widest transition-colors",
                 pathname === link.href
                   ? "text-amber-500 font-medium"
-                  : "text-white hover:text-amber-300"
+                  : "text-primary hover:text-primary/70"
               )}
             >
               {link.name}
@@ -67,7 +67,7 @@ export function Navbar() {
           <Link href="/book">
             <Button
               variant="outline"
-              className="rounded-3xl border-primary text-primary hover:bg-primary hover:text-primary-foreground uppercase tracking-wider text-xs px-6"
+              className="rounded-3xl border-primary text-primary hover:bg-primary hover:text-primary-foreground uppercase tracking-wider text-xs px-6 cursor-pointer"
             >
               Book Consultation
             </Button>

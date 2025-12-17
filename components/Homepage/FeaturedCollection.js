@@ -8,27 +8,30 @@ import { ArrowRight } from "lucide-react";
 const collections = [
   {
     id: 1,
-    title: "The Royal Senator",
+    title: "The African Native Elegance",
     image: "/images/man_in_gold_agbada.png",
-    description: "Impeccably tailored navy ensembles for the boardroom and beyond.",
+    description: "African Traditional elegance embodied with modern class and sophistication.",
+    href: "/collections",
   },
   {
     id: 2,
-    title: "Gold Coast Essence",
+    title: "Bespoke Suits & Foreign Heritage",
     image: "/images/man_in_white_agbada.png",
-    description: "Crisp white and gold hues reflecting pure opulence and grace.",
+    description: "Tailored English suits fused with rich Native aesthetics for the discerning gentleman.",
+    href: "/collections",
   },
   {
     id: 3,
-    title: "Burgundy Majesty",
+    title: "The Corporate Maestro",
     image: "/images/man_in_burgundy_kaftan_suit.png",
-    description: "Deep, rich tones for evening galas and special occasions.",
+    description: "Sharp, bespoke tailoring for corporate mastery.",
+    href: "/collections",
   },
 ];
 
-export default function FeaturedCollections() {
+export function FeaturedCollections() {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-black">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-12">
@@ -43,7 +46,7 @@ export default function FeaturedCollections() {
           <Link href="/collections">
             <Button
               variant="link"
-              className="text-foreground hover:text-primary group mt-4 md:mt-0 p-0 flex items-center"
+              className="text-foreground hover:text-primary group mt-4 md:mt-0 p-0 flex items-center cursor-pointer"
             >
               View All Works
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -53,9 +56,9 @@ export default function FeaturedCollections() {
 
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {collections.map(({ id, title, image, description }) => (
-            <div key={id} className="group cursor-pointer">
-              <div className="relative aspect-[3/4] overflow-hidden bg-muted mb-6">
+          {collections.map(({ id, title, image, description, href }) => (
+            <Link key={id} href={href} className="group relative cursor-pointer overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden mb-6">
                 <Image
                   src={image}
                   alt={title}
@@ -63,15 +66,21 @@ export default function FeaturedCollections() {
                   style={{ objectFit: "cover" }}
                   className="transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100">
+                  <h3 className="font-serif text-2xl text-primary mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    {title}
+                  </h3>
+                  <p className="text-white text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                    {description}
+                  </p>
+                </div>
+                {/* Gradient Title Bar */}
+                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-6 group-hover:opacity-0 transition-opacity">
+                  <h3 className="font-serif text-xl text-white">{title}</h3>
+                </div>
               </div>
-              <h3 className="text-2xl font-serif mb-2 group-hover:text-primary transition-colors">
-                {title}
-              </h3>
-              <p className="text-muted-foreground font-light leading-relaxed">
-                {description}
-              </p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

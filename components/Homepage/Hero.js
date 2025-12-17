@@ -12,40 +12,35 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/african_man_in_emerald_agbada_fashion_shot.png"
-          alt="African Man in Emerald Agbada"
+          alt="Men Native Luxury Fashion"
           fill
           priority
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-top opacity-90"
         />
-        <div className="absolute inset-0 bg-black/30 md:bg-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/60 via-neutral-900/40 to-neutral-900"></div>
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 px-4 text-center text-white">
+      <div className="container relative z-10 px-4 text-center text-white max-w-4xl mx-auto mt-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <span className="block text-sm md:text-base uppercase tracking-[0.3em] mb-12 text-accent">
-            Bespoke Native Wears
-          </span>
-
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-            Elegance <br /> Redefined
+          <p className="text-primary tracking-[0.3em] uppercase italic text-sm md:text-base mb-4 animate-fade-in-up">Est. 2024</p>
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
+            Timeless <br /> <span className="text-primary italic">Elegance</span>
           </h1>
 
-          <p className="max-w-xl mx-auto text-lg md:text-xl text-gray-200 mb-10 font-light leading-relaxed">
-            Crafting the finest African menswear for the modern gentleman.
-            Where tradition meets contemporary luxury.
+          <p className="text-neutral-300 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">
+            Experience the pinnacle of men's fashion. Native heritage meets English sophistication.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/collections">
               <Button
                 size="lg"
-                className="rounded-none bg-primary hover:bg-primary/90 text-white min-w-[200px] h-14 uppercase tracking-widest text-xs cursor-pointer"
+                className="rounded-none bg-primary hover:bg-white text-black min-w-[200px] h-14 uppercase tracking-widest text-xs font-bold cursor-pointer"
               >
                 View Collections
               </Button>
