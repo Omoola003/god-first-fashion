@@ -33,7 +33,7 @@ export function Hero() {
           </h1>
 
           <p className="text-neutral-300 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">
-            Experience the pinnacle of men's fashion. Native heritage meets English sophistication.
+            Experience the pinnacle of men&apos;s fashion. Native heritage meets English sophistication.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -46,7 +46,7 @@ export function Hero() {
               </Button>
             </Link>
 
-            <Link href="/book">
+            <Link href="/booking">
               <Button
                 variant="outline"
                 size="lg"

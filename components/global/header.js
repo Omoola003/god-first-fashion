@@ -64,7 +64,7 @@ export function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:flex">
-          <Link href="/book">
+          <Link href="/booking">
             <Button
               variant="outline"
               className="rounded-3xl border-primary text-primary hover:bg-primary hover:text-primary-foreground uppercase tracking-wider text-xs px-6 cursor-pointer"
@@ -126,7 +126,7 @@ export function Navbar() {
 
             {/* CTA */}
             <div className="mt-auto">
-              <Link href="/book">
+              <Link href="/booking">
                 <Button
                   className="w-full rounded-3xl uppercase tracking-wider text-xs bg-amber-500 text-white hover:bg-amber-600"
                   onClick={() => setIsMobileMenuOpen(false)}
