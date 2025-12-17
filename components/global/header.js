@@ -78,8 +78,7 @@ export function Navbar() {
         <button
           aria-label="Toggle menu"
           className={cn(
-            "md:hidden z-50 transition-colors duration-300",
-            isScrolled && !isMobileMenuOpen ? "text-black" : "text-white"
+            "md:hidden z-50 transition-colors duration-300 text-white"
           )}
           onClick={() => setIsMobileMenuOpen((v) => !v)}
         >
@@ -108,7 +107,7 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-lg uppercase font-medium text-gray-900 hover:text-amber-500 flex items-center gap-2 transform transition duration-500 ease-out opacity-0 translate-x-[-20px]"
+                  className="text-lg uppercase font-medium text-white hover:text-amber-500 flex items-center gap-2 transform transition duration-500 ease-out opacity-0 translate-x-[-20px]"
                   style={{
                     transitionDelay: `${index * 100}ms`,
                     opacity: isMobileMenuOpen ? 1 : 0,
