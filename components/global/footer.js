@@ -119,7 +119,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-xs uppercase tracking-widest text-amber-500 hover:text-white transition-colors"
+                className="absolute right-0 top-1/2 -translate-y-1/2 text-xs uppercase tracking-widest text-amber-500 hover:text-white transition-colors cursor-pointer"
               >
                 Join
               </button>

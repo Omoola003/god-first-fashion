@@ -274,7 +274,7 @@ export function ConsultationForm() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full h-14 rounded-none bg-primary text-black uppercase tracking-widest text-xs hover:bg-white transition-colors"
+                  className="w-full h-14 rounded-none bg-primary text-black uppercase tracking-widest text-xs hover:bg-white transition-colors cursor-pointer"
                 >
                   Confirm Appointment
                 </Button>

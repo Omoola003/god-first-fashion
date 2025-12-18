@@ -94,7 +94,7 @@ export function LookbookPreview() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="rounded-none border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black h-14 min-w-[220px] uppercase tracking-widest text-xs"
+                  className="rounded-none border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black h-14 min-w-[220px] uppercase tracking-widest text-xs cursor-pointer"
                 >
                   Discover the Series
                 </Button>
