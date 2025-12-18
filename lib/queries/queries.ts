@@ -59,3 +59,23 @@ export const lookbookQuery = groq`
     images
   }
 `;
+
+// Add this new query to your queries.js file
+export const allLookbooksQuery = groq`
+  *[_type == "lookbook"] | order(_createdAt desc){
+    title,
+    "slug": slug.current,
+    description,
+    coverImage
+  }
+`;
+
+// Keep this one as is for the [slug] detail page
+export const lookbookBySlugQuery = groq`
+  *[_type == "lookbook" && slug.current == $slug][0]{
+    title,
+    description,
+    coverImage,
+    images
+  }
+`;
