@@ -9,12 +9,14 @@ import { collectionBySlugQuery } from "@/lib/queries/queries";
 export default async function CollectionDetailPage({ params }) {
   const { slug } = await params;
 
-  // Fetch data
-  const collection = await sanityClient.fetch(collectionBySlugQuery, { slug });
+  // Method 2: Added tag "collection"
+  const collection = await sanityClient.fetch(
+    collectionBySlugQuery, 
+    { slug },
+    { next: { tags: ["collection"] } }
+  );
 
-  if (!collection) {
-    notFound();
-  }
+  if (!collection) notFound();
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 selection:bg-white/20 selection:text-white">

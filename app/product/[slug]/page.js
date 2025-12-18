@@ -6,11 +6,26 @@ import { sanityClient } from "@/lib/sanity.client";
 import { urlFor } from "@/lib/sanity.image";
 import { productBySlugQuery } from "@/lib/queries/queries";
 
+// 1. GENERATE STATIC PARAMS: Required for build-time rendering of slug pages
+export async function generateStaticParams() {
+  const query = `*[_type == "product" && defined(slug.current)]{ "slug": slug.current }`;
+  const products = await sanityClient.fetch(query);
+
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
+}
+
 export default async function ProductPage({ params }) {
+  // 2. Await params for Next.js 15/16
   const { slug } = await params;
 
-  // Fetch product data
-  const product = await sanityClient.fetch(productBySlugQuery, { slug });
+  // 3. Method 2: Added tag "product" for On-Demand Revalidation
+  const product = await sanityClient.fetch(
+    productBySlugQuery, 
+    { slug },
+    { next: { tags: ["product"] } }
+  );
 
   if (!product) {
     notFound();
@@ -21,7 +36,7 @@ export default async function ProductPage({ params }) {
       <section className="max-w-7xl mx-auto px-6 pt-32 pb-24">
         {/* BREADCRUMB */}
         <nav className="mb-12 flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-neutral-500">
-          <Link href="/collections" className="hover:text-white transition-colors">Archive</Link>
+          <Link href="/products" className="hover:text-white transition-colors">Boutique</Link>
           <span>/</span>
           {product.collection ? (
             <Link href={`/collections/${product.collection.slug}`} className="hover:text-white transition-colors">
@@ -35,10 +50,10 @@ export default async function ProductPage({ params }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24 items-start">
           
           {/* IMAGE GALLERY */}
-          <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden group">
+          <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden group shadow-2xl">
             {product.image ? (
               <Image
-                src={urlFor(product.image).url()}
+                src={urlFor(product.image).width(1200).quality(90).url()}
                 alt={product.name}
                 fill
                 priority
@@ -76,15 +91,15 @@ export default async function ProductPage({ params }) {
                 </p>
               </div>
 
-              {/* CRAFT DETAILS (Static placeholders or add to schema later) */}
+              {/* CRAFT DETAILS */}
               <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/5">
                 <div>
                   <h4 className="text-[10px] uppercase tracking-widest text-neutral-500 mb-2">Material</h4>
-                  <p className="text-sm text-neutral-300">Premium Cotton & Silk</p>
+                  <p className="text-sm text-neutral-300">Premium Fabrics</p>
                 </div>
                 <div>
                   <h4 className="text-[10px] uppercase tracking-widest text-neutral-500 mb-2">Tailoring</h4>
-                  <p className="text-sm text-neutral-300">Bespoke Finished</p>
+                  <p className="text-sm text-neutral-300">Hand-finished Details</p>
                 </div>
               </div>
             </div>
@@ -115,7 +130,7 @@ export default async function ProductPage({ params }) {
             href="/collections"
             className="text-xs uppercase tracking-widest text-white border-b border-white/40 pb-2 hover:border-white transition-all"
           >
-            Explore the Collection
+            Explore the Archive
           </Link>
         </div>
       </section>

@@ -6,8 +6,12 @@ import { urlFor } from "@/lib/sanity.image";
 import { collectionsQuery } from "@/lib/queries/queries";
 
 export default async function CollectionsPage() {
-  // Fetch the list of all collections from Sanity
-  const collections = await sanityClient.fetch(collectionsQuery);
+  // Method 2: Fetching with tags for On-Demand Revalidation
+  const collections = await sanityClient.fetch(
+    collectionsQuery, 
+    {}, 
+    { next: { tags: ["collection"] } }
+  );
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 selection:bg-white/20 selection:text-white">
@@ -52,12 +56,11 @@ export default async function CollectionsPage() {
               {/* IMAGE SECTION */}
               <div className="w-full md:w-1/2 relative">
                 <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-neutral-900 w-full md:w-[90%] mx-auto shadow-2xl">
-                  {/* Overlay for depth */}
                   <div className="absolute inset-0 bg-black/20 z-10 transition-opacity duration-700 group-hover:opacity-0" />
 
                   {collection.heroImage ? (
                     <Image
-                      src={urlFor(collection.heroImage).url()}
+                      src={urlFor(collection.heroImage).width(1000).quality(85).url()}
                       alt={collection.name}
                       fill
                       sizes="(min-width: 1024px) 50vw, 100vw"
@@ -67,7 +70,6 @@ export default async function CollectionsPage() {
                     <div className="w-full h-full bg-neutral-800" />
                   )}
 
-                  {/* Floating Tag */}
                   <div className="absolute top-6 left-6 z-20 bg-black/40 backdrop-blur-md px-4 py-2 border border-white/10">
                     <span className="text-xs uppercase tracking-widest text-white">
                       {collection.category}
@@ -78,7 +80,6 @@ export default async function CollectionsPage() {
 
               {/* TEXT SECTION */}
               <div className="w-full md:w-1/2 flex flex-col justify-center relative px-4 md:px-12">
-                {/* Large Background Number Watermark */}
                 <span className="absolute -top-20 md:-top-16 left-0 md:-left-4 text-[12rem] font-serif text-white/[0.02] select-none pointer-events-none leading-none z-0">
                   0{index + 1}
                 </span>
@@ -87,33 +88,18 @@ export default async function CollectionsPage() {
                   <h2 className="font-serif text-4xl md:text-6xl text-white mb-6 group-hover:translate-x-2 transition-transform duration-500">
                     {collection.name}
                   </h2>
-
                   <div className="h-px w-12 bg-neutral-600 mb-8 group-hover:w-24 group-hover:bg-white transition-all duration-700" />
-
                   <p className="text-neutral-400 font-light leading-loose mb-8 max-w-md text-sm md:text-base">
                     {collection.description}
                   </p>
-
                   <div className="flex items-center gap-6">
                     <span className="text-white text-lg font-medium">
                       {collection.priceRange}
                     </span>
-
-                    {/* Animated Button UI */}
                     <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-500 group-hover:text-white transition-colors duration-300">
                       <span>Explore Collection</span>
-                      <svg
-                        className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="square"
-                          strokeLinejoin="miter"
-                          strokeWidth="1"
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
+                      <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="1" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </div>
                   </div>
