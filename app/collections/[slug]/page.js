@@ -55,10 +55,10 @@ export default async function CollectionDetailPage({ params }) {
               Price Range: <span className="text-white">{collection.priceRange}</span>
             </div>
             <Link
-              href={`/products?collection=${slug}`}
+              href={`/product?collection=${slug}`}
               className="inline-flex items-center gap-3 px-6 py-3 border border-white/30 text-white text-xs uppercase tracking-widest hover:bg-white/10 transition-colors duration-300"
             >
-              View All Products
+              View All products
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="1" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

@@ -35,6 +35,19 @@ export const collectionBySlugQuery = groq`
   }
 `
 
+export const allProductsQuery = groq`
+  *[_type == "product" && (!defined($collectionSlug) || *[_type == "collection" && slug.current == $collectionSlug][0].featuredProduct._ref == _id || references(*[_type == "collection" && slug.current == $collectionSlug][0]._id)) ] | order(_createdAt desc){
+    name,
+    price,
+    description,
+    image,
+    "slug": slug.current,
+    "collection": *[_type == "collection" && featuredProduct._ref == ^._id][0]{
+      name,
+      "slug": slug.current
+    }
+  }
+`;
 
 export const productBySlugQuery = groq`
   *[_type == "product" && slug.current == $slug][0]{
