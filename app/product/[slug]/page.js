@@ -36,7 +36,7 @@ export default async function ProductPage({ params }) {
       <section className="max-w-7xl mx-auto px-6 pt-32 pb-24">
         {/* BREADCRUMB */}
         <nav className="mb-12 flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-neutral-500">
-          <Link href="/products" className="hover:text-white transition-colors">Boutique</Link>
+          <Link href="/product" className="hover:text-white transition-colors">Boutique</Link>
           <span>/</span>
           {product.collection ? (
             <Link href={`/collections/${product.collection.slug}`} className="hover:text-white transition-colors">

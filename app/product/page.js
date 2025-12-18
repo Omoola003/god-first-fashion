@@ -30,8 +30,8 @@ export default async function ProductsPage({ searchParams }) {
           </h1>
           
           {collectionSlug && (
-            <Link href="/products" className="text-xs uppercase tracking-widest text-neutral-400 hover:text-white transition-colors flex items-center gap-2">
-              <span className="text-lg">←</span> View All Products
+            <Link href="/collections" className="text-xs uppercase tracking-widest text-neutral-400 hover:text-white transition-colors flex items-center gap-2">
+              <span className="text-lg">←</span> View All Collections
             </Link>
           )}
         </div>
@@ -77,7 +77,7 @@ export default async function ProductsPage({ searchParams }) {
           ) : (
             <div className="text-center py-40">
               <p className="text-neutral-500 font-serif text-2xl">No pieces found in this selection.</p>
-              <Link href="/products" className="text-xs uppercase tracking-widest mt-6 inline-block underline underline-offset-8">
+              <Link href="/collections" className="text-xs uppercase tracking-widest mt-6 inline-block underline underline-offset-8">
                 Back to All Products
               </Link>
             </div>
