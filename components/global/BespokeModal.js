@@ -204,7 +204,7 @@ export default function BespokeModal({ product, isOpen, onClose }) {
                   <button 
                     type="submit"
                     disabled={status === "submitting"}
-                    className="w-full bg-white text-black py-6 text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-neutral-200 transition-all disabled:opacity-50 flex items-center justify-center gap-3 group"
+                    className="w-full bg-white text-black py-6 text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-neutral-200 transition-all disabled:opacity-50 flex items-center justify-center gap-3 group cursor-pointer"
                   >
                     {status === "submitting" ? (
                       <><Loader2 className="animate-spin" size={14} /> Synchronizing with Atelier</>

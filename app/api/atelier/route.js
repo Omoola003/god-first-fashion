@@ -24,6 +24,7 @@ export async function POST(req) {
         "Purpose/Occasion": body.occasion || "General",
         
         // Exact column names from your list
+        "Standard Size": isBespoke ? "Custom" : (body.standard_size || ""),
         "Top Chest": isBespoke ? (parseFloat(body.top_chest) || 0) : 0,
         "Top Shoulder": isBespoke ? (parseFloat(body.top_shoulder) || 0) : 0,
         "Top Sleeve": isBespoke ? (parseFloat(body.top_sleeve) || 0) : 0,
@@ -52,19 +53,34 @@ export async function POST(req) {
       return NextResponse.json({ success: "Archive entry secured." });
     }
 
-    // 2. ROUTE TO INBOX (Only for standard contact forms)
-    if (body.type || body.service || body.message) {
-      const fullName = body.name || `${body.firstName || ''} ${body.lastName || ''}`.trim();
-      
-      // Verification: Check if your INBOX table uses "Email" or "Client"
+// 2. ROUTE TO NEWSLETTER (Move this UP)
+    // Check this FIRST because it's a specific 'submission_source'
+    if (body.submission_source === "Newsletter Signup") {
       await base("INBOX").create([{
         fields: {
-          "Name": fullName,
+          "Name": "Newsletter Subscriber",
+          "Email": body.email,
+          "Inquiry Type": "Newsletter",
+          "Message": "New subscriber from global footer.",
+          "Entry Date": new Date().toISOString().split('T')[0],
+          "Handling Status": "Unread"
+        }
+      }]);
+      return NextResponse.json({ success: "You have been added to the Private Circle." });
+    }
+
+    // 3. ROUTE TO INBOX (Standard contact/booking forms)
+    // Add a check to ensure we aren't processing a newsletter here
+    else if (body.type || body.service || body.message || body.email) {
+      const fullName = body.name || `${body.firstName || ''} ${body.lastName || ''}`.trim();
+      
+      await base("INBOX").create([{
+        fields: {
+          "Name": fullName || "Anonymous",
           "Email": body.email || body.client_email, 
           "Phone": body.phone || "",
-          "Inquiry Type": body.type || "General",
-          "Additional Notes": body.notes || "",
-          "Message": body.message || "",
+          "Inquiry Type": body.type || body.service || "General",
+          "Message": body.message || "Consultation Request",
           "Entry Date": new Date().toISOString().split('T')[0],
           "Handling Status": "Unread"
         }

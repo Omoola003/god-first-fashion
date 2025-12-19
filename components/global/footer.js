@@ -1,12 +1,39 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Instagram, Facebook, Mail, MapPin, Phone } from "lucide-react";
 import TikTokIcon from "@/public/icons/TikTokIcon";
 
 export default function Footer() {
+  const [status, setStatus] = useState("idle"); // idle, loading, success, error
+
+  const handleNewsletter = async (e) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    const email = e.target.email.value;
+
+    try {
+      const response = await fetch("/api/atelier", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          submission_source: "Newsletter Signup"
+        }),
+      });
+
+      if (!response.ok) throw new Error();
+      
+      setStatus("success");
+      e.target.reset(); // Clear the input
+    } catch (err) {
+      setStatus("error");
+    }
+  };
+
   return (
     <motion.footer
       initial={{ opacity: 0, y: 24 }}
@@ -103,27 +130,37 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* NEWSLETTER */}
+{/* NEWSLETTER */}
           <div className="md:col-span-3">
             <h4 className="uppercase tracking-widest text-xs text-gray-300 mb-8">
               Private Circle
             </h4>
             <p className="text-gray-400 text-sm font-light mb-6 max-w-sm">
-              Early access to collections, editorials, and bespoke offers.
+              {status === "success" 
+                ? "Welcome to the circle. Expect our next editorial soon." 
+                : "Early access to collections, editorials, and bespoke offers."}
             </p>
-            <form className="relative">
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full bg-transparent border-b border-white/20 py-3 pr-20 text-sm placeholder:text-gray-600 focus:outline-none focus:border-amber-500 transition-colors"
-              />
-              <button
-                type="submit"
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-xs uppercase tracking-widest text-amber-500 hover:text-white transition-colors cursor-pointer"
-              >
-                Join
-              </button>
-            </form>
+            
+            {status !== "success" && (
+              <form onSubmit={handleNewsletter} className="relative">
+                <input
+                  type="email"
+                  name="email" // Added name attribute
+                  required
+                  placeholder={status === "error" ? "Please try again" : "Email Address"}
+                  className={`w-full bg-transparent border-b py-3 pr-20 text-sm transition-colors focus:outline-none ${
+                    status === "error" ? "border-red-500" : "border-white/20 focus:border-amber-500"
+                  }`}
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 text-xs uppercase tracking-widest text-amber-500 hover:text-white transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  {status === "loading" ? "..." : "Join"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
 
