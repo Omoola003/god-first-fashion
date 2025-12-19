@@ -1,0 +1,15 @@
+# *
+User-agent: *
+Allow: /
+
+# Black-Box
+User-agent: Black-Box
+Disallow: /api
+Disallow: /admin
+
+# Host
+Host: https://god-first-fashion.vercel.app/
+
+# Sitemaps
+Sitemap: https://god-first-fashion.vercel.app/sitemap.xml
+Sitemap: https://god-first-fashion.vercel.app//server-sitemap.xml
