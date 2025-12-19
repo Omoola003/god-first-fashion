@@ -6,19 +6,23 @@ import { Mail, Phone, MapPin, CheckCircle2, Loader2 } from "lucide-react";
 export default function ContactPage() {
   const [status, setStatus] = useState({ state: "idle", message: "" });
 
-  async function handleSubmit(e) {
-    e.preventDefault(); // Prevent default form submission
+async function handleSubmit(e) {
+    e.preventDefault();
     setStatus({ state: "submitting", message: "" });
 
-    // Gather data using FormData
     const formData = new FormData(e.target);
     const payload = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("/api/contact", {
+      // Pointing to the unified API we built previously
+      const response = await fetch("/api/atelier", { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          ...payload,
+          // Ensuring 'type' exists triggers the "INBOX" branch in our API
+          submission_source: "Contact Page" 
+        }),
       });
 
       const result = await response.json();
@@ -92,9 +96,11 @@ export default function ContactPage() {
                   <select
                     name="type"
                     required
+                    defaultValue="" // Set the initial value here
                     className="w-full bg-transparent py-3 text-sm text-neutral-400 focus:text-white focus:outline-none transition-colors appearance-none cursor-pointer"
                   >
-                    <option value="" disabled selected className="bg-neutral-800">Select Inquiry Type</option>
+                    {/* Removed 'selected' attribute from the option below */}
+                    <option value="" disabled className="bg-neutral-800">Select Inquiry Type</option>
                     <option value="Private Consultation" className="bg-neutral-800">Private Consultation</option>
                     <option value="Wedding & Ceremonial" className="bg-neutral-800">Wedding & Ceremonial</option>
                     <option value="Corporate Engagement" className="bg-neutral-800">Corporate Engagement</option>

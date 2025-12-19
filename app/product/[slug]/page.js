@@ -5,132 +5,123 @@ import { notFound } from "next/navigation";
 import { sanityClient } from "@/lib/sanity.client";
 import { urlFor } from "@/lib/sanity.image";
 import { productBySlugQuery } from "@/lib/queries/queries";
+import ProductActions from "@/components/global/ProductActions";
 
-// 1. GENERATE STATIC PARAMS: Required for build-time rendering of slug pages
 export async function generateStaticParams() {
   const query = `*[_type == "product" && defined(slug.current)]{ "slug": slug.current }`;
   const products = await sanityClient.fetch(query);
-
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
+  return products.map((product) => ({ slug: product.slug }));
 }
 
 export default async function ProductPage({ params }) {
-  // 2. Await params for Next.js 15/16
   const { slug } = await params;
 
-  // 3. Method 2: Added tag "product" for On-Demand Revalidation
   const product = await sanityClient.fetch(
     productBySlugQuery, 
     { slug },
     { next: { tags: ["product"] } }
   );
 
-  if (!product) {
-    notFound();
-  }
+  if (!product) notFound();
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 selection:bg-white/20">
       <section className="max-w-7xl mx-auto px-6 pt-32 pb-24">
         {/* BREADCRUMB */}
-        <nav className="mb-12 flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-neutral-500">
-          <Link href="/product" className="hover:text-white transition-colors">Boutique</Link>
-          <span>/</span>
+        <nav className="mb-12 flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] text-neutral-600">
+          <Link href="/product" className="hover:text-white transition-colors">Archive</Link>
+          <span className="opacity-30">/</span>
           {product.collection ? (
             <Link href={`/collections/${product.collection.slug}`} className="hover:text-white transition-colors">
               {product.collection.name}
             </Link>
           ) : (
-            <span>New Arrival</span>
+            <span>Bespoke Piece</span>
           )}
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-32 items-start">
           
-          {/* IMAGE GALLERY */}
-          <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden group shadow-2xl">
+          {/* IMAGE SECTION */}
+          <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden shadow-2xl">
             {product.image ? (
               <Image
-                src={urlFor(product.image).width(1200).quality(90).url()}
+                src={urlFor(product.image).width(1200).quality(100).url()}
                 alt={product.name}
                 fill
                 priority
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                className="object-cover transition-transform duration-[2000ms] hover:scale-110"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-neutral-700 italic">
-                Image coming soon
+              <div className="w-full h-full flex items-center justify-center text-neutral-800 italic uppercase tracking-widest text-xs">
+                Visualizing Craft...
               </div>
             )}
+            <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/20 to-transparent pointer-events-none" />
           </div>
 
-          {/* PRODUCT INFO */}
+          {/* INFO SECTION */}
           <div className="flex flex-col pt-4">
-            <h1 className="font-serif text-5xl md:text-6xl text-white mb-4 tracking-tight">
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-primary mb-6 tracking-tight italic">
               {product.name}
             </h1>
             
-            <div className="flex items-center gap-6 mb-10">
-              <span className="text-2xl font-medium text-white">
+            <div className="flex items-center gap-8 mb-12">
+              <span className="text-2xl font-light text-white tracking-widest uppercase">
                 {product.price}
               </span>
-              <div className="h-px w-12 bg-neutral-700" />
-              <span className="text-xs uppercase tracking-widest text-neutral-500">
-                In Stock
+              <div className="h-px w-16 bg-white/10" />
+              <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-500 italic">
+                Handcrafted to Order
               </span>
             </div>
 
-            <div className="space-y-8 mb-12">
-              <div>
-                <h3 className="text-xs uppercase tracking-widest text-white mb-4">Description</h3>
-                <p className="text-neutral-400 font-light leading-loose text-base md:text-lg">
+            <div className="space-y-10 mb-16">
+              <div className="max-w-md">
+                <h3 className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-4 font-bold">The Narrative</h3>
+                <p className="text-neutral-400 font-light leading-loose text-base md:text-lg italic">
                   {product.description}
                 </p>
               </div>
 
-              {/* CRAFT DETAILS */}
-              <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/5">
+              {/* ATELIER SPECS */}
+              <div className="grid grid-cols-2 gap-12 py-10 border-y border-white/5">
                 <div>
-                  <h4 className="text-[10px] uppercase tracking-widest text-neutral-500 mb-2">Material</h4>
-                  <p className="text-sm text-neutral-300">Premium Fabrics</p>
+                  <h4 className="text-[9px] uppercase tracking-[0.3em] text-neutral-600 mb-3">Material Grade</h4>
+                  <p className="text-xs text-neutral-300 uppercase tracking-widest">Master Selection Fabrics</p>
                 </div>
                 <div>
-                  <h4 className="text-[10px] uppercase tracking-widest text-neutral-500 mb-2">Tailoring</h4>
-                  <p className="text-sm text-neutral-300">Hand-finished Details</p>
+                  <h4 className="text-[9px] uppercase tracking-[0.3em] text-neutral-600 mb-3">Construction</h4>
+                  <p className="text-xs text-neutral-300 uppercase tracking-widest">Artisanal Hand-finish</p>
                 </div>
               </div>
             </div>
 
-            {/* ACTION BUTTONS */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="flex-1 bg-white text-black py-5 text-xs uppercase tracking-[0.2em] font-bold hover:bg-neutral-200 transition-colors">
-                Enquire via WhatsApp
-              </button>
-              <button className="flex-1 border border-white/20 text-white py-5 text-xs uppercase tracking-[0.2em] hover:bg-white/5 transition-colors">
-                Add to Wishlist
-              </button>
-            </div>
+            {/* ACTION BUTTONS (CLIENT COMPONENT) */}
+            <ProductActions product={product} />
 
-            <p className="mt-8 text-[10px] text-neutral-600 uppercase tracking-widest text-center sm:text-left">
-              * Each piece is handcrafted. Please allow 14 days for production.
-            </p>
+            <div className="mt-10 space-y-2">
+              <p className="text-[9px] text-neutral-600 uppercase tracking-[0.3em] leading-relaxed">
+                * As a GodFirst bespoke piece, production is limited.
+              </p>
+              <p className="text-[9px] text-neutral-600 uppercase tracking-[0.3em] leading-relaxed">
+                * Standard atelier timeline: 14—21 business days.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* RELATED SECTION PREVIEW */}
-      <section className="bg-neutral-900/50 py-24 border-t border-white/5">
+      {/* FOOTER CALL TO ACTION */}
+      <section className="bg-neutral-900/30 py-32 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="font-serif text-3xl text-white mb-4">The Complete Set</h2>
-          <p className="text-neutral-500 text-sm mb-12">Complete your look with curated selections from our latest series.</p>
+          <span className="text-primary text-[10px] uppercase tracking-[0.5em] mb-6 block">Beyond the Garment</span>
+          <h2 className="font-serif text-4xl text-white mb-8 italic">The Complete Vision</h2>
           <Link 
             href="/collections"
-            className="text-xs uppercase tracking-widest text-white border-b border-white/40 pb-2 hover:border-white transition-all"
+            className="inline-block text-[10px] uppercase tracking-[0.4em] text-white border-b border-primary pb-2 hover:text-primary transition-all"
           >
-            Explore the Archive
+            Explore the Series Archive
           </Link>
         </div>
       </section>

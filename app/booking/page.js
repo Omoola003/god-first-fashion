@@ -32,9 +32,11 @@ export default function BookPage() {
     defaultValues: {
       firstName: "",
       lastName: "",
+      email: "",
+      phone: "",
       date: "",
       time: "",
-      service: "",
+      service: "Consultation",
       notes: "",
     },
   });
@@ -43,10 +45,16 @@ export default function BookPage() {
     setStatus({ state: "submitting", message: "" });
 
     try {
-      const response = await fetch("/api/booking", {
+      const response = await fetch("/api/atelier", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          type: data.service, 
+          // We combine contact details into the message for redundancy
+          message: `Booking Request for ${data.date} at ${data.time}.\nWhatsApp/Phone: ${data.phone}\nNotes: ${data.notes}`,
+          submission_source: "Private Consultation Page"
+        }),
       });
 
       const result = await response.json();
@@ -64,7 +72,7 @@ export default function BookPage() {
     <div className="min-h-screen bg-neutral-900 text-white">
       {/* HEADER */}
       <section className="pt-32 pb-24 text-center px-4 max-w-3xl mx-auto">
-        <h1 className="font-serif text-5xl md:text-6xl mb-6">Private Consultation</h1>
+        <h1 className="font-serif text-5xl md:text-6xl mb-6 tracking-tight">Private Consultation</h1>
         <p className="text-neutral-400 font-light leading-relaxed">
           Every GodFirst garment is born from intention, precision, and dialogue.
           Request a private consultation with our atelier to begin your bespoke journey.
@@ -74,7 +82,7 @@ export default function BookPage() {
       {/* CONTENT */}
       <section className="max-w-6xl mx-auto px-4 pb-40 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         {/* IMAGE SECTION */}
-        <div className="relative aspect-[3/4] overflow-hidden group shadow-2xl">
+        <div className="relative aspect-[3/4] overflow-hidden group shadow-2xl border border-white/5">
           <Image
             src="/images/atelier_measurement.png"
             alt="Bespoke Measurement"
@@ -91,7 +99,7 @@ export default function BookPage() {
         </div>
 
         {/* FORM SECTION */}
-        <div className="border border-white/5 bg-neutral-800 p-10 lg:p-14 relative overflow-hidden">
+        <div className="border border-white/5 bg-neutral-800 p-8 lg:p-12 relative overflow-hidden">
           {status.state === "success" ? (
             <div className="py-20 text-center animate-in fade-in zoom-in duration-500">
               <CheckCircle2 className="mx-auto text-primary mb-6" size={48} />
@@ -109,9 +117,10 @@ export default function BookPage() {
             <>
               <h3 className="font-serif text-2xl mb-8 text-neutral-100">Request a Consultation</h3>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  {/* Names */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  
+                  {/* Name Row */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
                       name="firstName"
@@ -119,7 +128,7 @@ export default function BookPage() {
                         <FormItem>
                           <FormLabel className="uppercase text-[10px] tracking-widest text-neutral-500">First Name</FormLabel>
                           <FormControl>
-                            <Input {...field} className="rounded-none h-12 bg-neutral-900 border-neutral-700 focus-visible:ring-primary" />
+                            <Input {...field} required className="rounded-none h-12 bg-neutral-900 border-neutral-700 focus-visible:ring-primary" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -132,7 +141,37 @@ export default function BookPage() {
                         <FormItem>
                           <FormLabel className="uppercase text-[10px] tracking-widest text-neutral-500">Last Name</FormLabel>
                           <FormControl>
-                            <Input {...field} className="rounded-none h-12 bg-neutral-900 border-neutral-700 focus-visible:ring-primary" />
+                            <Input {...field} required className="rounded-none h-12 bg-neutral-900 border-neutral-700 focus-visible:ring-primary" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* Contact Row */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="uppercase text-[10px] tracking-widest text-neutral-500">Email Address</FormLabel>
+                          <FormControl>
+                            <Input type="email" {...field} required className="rounded-none h-12 bg-neutral-900 border-neutral-700 focus-visible:ring-primary" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="uppercase text-[10px] tracking-widest text-neutral-500">Phone / WhatsApp</FormLabel>
+                          <FormControl>
+                            <Input type="tel" {...field} required placeholder="+234..." className="rounded-none h-12 bg-neutral-900 border-neutral-700 focus-visible:ring-primary" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -141,7 +180,7 @@ export default function BookPage() {
                   </div>
 
                   {/* Date & Time */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
                       name="date"
@@ -149,7 +188,7 @@ export default function BookPage() {
                         <FormItem>
                           <FormLabel className="uppercase text-[10px] tracking-widest text-neutral-500">Preferred Date</FormLabel>
                           <FormControl>
-                            <Input type="date" {...field} className="rounded-none h-12 bg-neutral-900 border-neutral-700 [color-scheme:dark]" />
+                            <Input type="date" {...field} required className="rounded-none h-12 bg-neutral-900 border-neutral-700 [color-scheme:dark]" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -193,12 +232,12 @@ export default function BookPage() {
                               key={type}
                               className={`border px-4 py-3 text-center cursor-pointer transition-all duration-300 ${
                                 field.value === type
-                                  ? "border-primary text-primary"
+                                  ? "border-primary text-primary bg-primary/5"
                                   : "border-neutral-700 text-neutral-500 hover:border-neutral-500"
                               }`}
                             >
                               <input type="radio" value={type} checked={field.value === type} onChange={() => field.onChange(type)} className="sr-only" />
-                              <span className="text-[10px] uppercase tracking-widest">{type}</span>
+                              <span className="text-[10px] uppercase tracking-widest font-medium">{type}</span>
                             </label>
                           ))}
                         </div>
@@ -215,7 +254,7 @@ export default function BookPage() {
                       <FormItem>
                         <FormLabel className="uppercase text-[10px] tracking-widest text-neutral-500">Additional Notes</FormLabel>
                         <FormControl>
-                          <Textarea {...field} rows={3} className="rounded-none bg-neutral-900 border-neutral-700 resize-none" placeholder="Bespoke suit for wedding, etc..." />
+                          <Textarea {...field} rows={3} className="rounded-none bg-neutral-900 border-neutral-700 resize-none focus-visible:ring-primary" placeholder="Details about your bespoke request..." />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
