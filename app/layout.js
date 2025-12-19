@@ -1,10 +1,11 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/global/header";
 import Footer from "@/components/global/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { GoogleTagManager } from '@next/third-parties/google';
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Full SEO / AEO Metadata Configuration
 export const metadata = {
   metadataBase: new URL('https://god-first-fashion.vercel.app/'),
   title: {
@@ -28,6 +28,12 @@ export const metadata = {
   authors: [{ name: "GodFirst Fashion House" }],
   creator: "GodFirst Fashion",
   publisher: "GodFirst Fashion",
+  alternates: {
+    canonical: "/",
+  },
+  verification: {
+    google: "Si_aw9OMTjzbg8OvZad_EYKVrafrEdCEAdQgHGwKGfc",
+  },
   formatDetection: {
     email: false,
     address: true,
@@ -49,6 +55,10 @@ export const metadata = {
     locale: 'en_NG',
     type: 'website',
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@godfirstfashion",
+  },
   robots: {
     index: true,
     follow: true,
@@ -62,12 +72,43 @@ export const metadata = {
   },
 };
 
+const atelierSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ClothingStore",
+      "@id": "https://god-first-fashion.vercel.app/#organization",
+      "name": "GodFirst Fashion",
+      "url": "https://god-first-fashion.vercel.app/",
+      "logo": "https://god-first-fashion.vercel.app/logo.png",
+      "image": "https://god-first-fashion.vercel.app/images/og-main.jpg",
+      "telephone": "+2348023828071",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "26D Olowu Street",
+        "addressLocality": "Ikeja",
+        "addressRegion": "Lagos",
+        "addressCountry": "NG"
+      }
+    },
+    {
+      "@type": "Service",
+      "name": "Bespoke Native Tailoring",
+      "provider": { "@id": "https://god-first-fashion.vercel.app/#organization" },
+      "description": "Custom-made traditional African attire including Agbada, Kaftans, and Senator sets."
+    }
+  ]
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* Google Tag Manager (GTM) - Replace with your actual ID */}
-      <GoogleTagManager gtmId="GTM-XXXXXXX" /> 
-      
+      {/* 1. Google Tag Manager (Container) */}
+      <GoogleTagManager gtmId="GTM-N9ZFMR45" /> 
+
+      {/* 2. Google Analytics (gtag.js) */}
+      <GoogleAnalytics gaId="G-SY0JBTG97Y" />
+
       <body
         className={`
           ${geistSans.variable}
@@ -78,12 +119,19 @@ export default function RootLayout({ children }) {
           text-foreground
         `}
       >
-        {/* Vercel Speed & Analytics Tracking */}
-        <Analytics />
-        <SpeedInsights />
+        <Script
+          id="atelier-structured-data"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(atelierSchema) }}
+        />
+
         <Navbar />
         <main>{children}</main>
         <Footer />
+
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
