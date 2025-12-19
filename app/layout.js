@@ -29,7 +29,7 @@ export const metadata = {
     description: "Traditional African elegance redefined for the modern man.",
     url: 'https://god-first-fashion.vercel.app/',
     siteName: 'GodFirst Fashion',
-    images: [{ url: '/images/og-main.jpg', width: 1200, height: 630 }],
+    images: [{ url: '/images/og-main.png', width: 1200, height: 630 }],
     locale: 'en_NG',
     type: 'website',
   },
@@ -56,7 +56,7 @@ const enterpriseSchema = {
       "name": "GodFirst Fashion",
       "url": "https://god-first-fashion.vercel.app/",
       "logo": "https://god-first-fashion.vercel.app/logo.png",
-      "image": "https://god-first-fashion.vercel.app/images/og-main.jpg",
+      "image": "https://god-first-fashion.vercel.app/images/og-main.png",
       "sameAs": [
         "https://instagram.com/godfirstfashion",
         "https://facebook.com/godfirstfashion"
