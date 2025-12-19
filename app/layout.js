@@ -5,49 +5,49 @@ import { Navbar } from "@/components/global/header";
 import Footer from "@/components/global/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+// ENTERPRISE METADATA CONFIG
 export const metadata = {
   metadataBase: new URL('https://god-first-fashion.vercel.app/'),
   title: {
     default: "GodFirst | Bespoke Native Wears & Luxury Menswear",
     template: "%s | GodFirst Fashion"
   },
-  description: "Luxury African menswear where tradition meets modern elegance. Bespoke native wears, ceremonial attire, and private consultations in Lagos.",
-  keywords: ["Bespoke Tailoring Lagos", "African Menswear", "Luxury Native Wears", "GodFirst Fashion", "Nigerian Tailor"],
-  authors: [{ name: "GodFirst Fashion House" }],
-  creator: "GodFirst Fashion",
-  publisher: "GodFirst Fashion",
-  alternates: {
-    canonical: "/",
-  },
-  // ✅ 1st Line of Defense: Meta Tag Verification (Highly Recommended)
+  description: "Luxury African menswear where tradition meets modern elegance. Custom bespoke tailoring, native wears, and private consultations in Lagos.",
+  keywords: ["Bespoke Tailoring Lagos", "African Menswear", "Luxury Native Wears", "Nigerian Fashion Brand"],
   verification: {
     google: "Si_aw9OMTjzbg8OvZad_EYKVrafrEdCEAdQgHGwKGfc",
   },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "GodFirst | Bespoke Native Wears",
-    description: "Luxury African menswear where tradition meets modern elegance",
+    description: "Traditional African elegance redefined for the modern man.",
     url: 'https://god-first-fashion.vercel.app/',
     siteName: 'GodFirst Fashion',
-    images: [{ url: '/images/og-main.jpg', width: 1200, height: 630, alt: 'GodFirst Luxury Atelier' }],
+    images: [{ url: '/images/og-main.jpg', width: 1200, height: 630 }],
     locale: 'en_NG',
     type: 'website',
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
-const atelierSchema = {
+// ENTERPRISE AEO SCHEMA (JSON-LD)
+const enterpriseSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -55,6 +55,12 @@ const atelierSchema = {
       "@id": "https://god-first-fashion.vercel.app/#organization",
       "name": "GodFirst Fashion",
       "url": "https://god-first-fashion.vercel.app/",
+      "logo": "https://god-first-fashion.vercel.app/logo.png",
+      "image": "https://god-first-fashion.vercel.app/images/og-main.jpg",
+      "sameAs": [
+        "https://instagram.com/godfirstfashion",
+        "https://facebook.com/godfirstfashion"
+      ],
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "26D Olowu Street",
@@ -62,6 +68,13 @@ const atelierSchema = {
         "addressRegion": "Lagos",
         "addressCountry": "NG"
       }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://god-first-fashion.vercel.app/#website",
+      "url": "https://god-first-fashion.vercel.app/",
+      "name": "GodFirst Fashion",
+      "publisher": { "@id": "https://god-first-fashion.vercel.app/#organization" }
     }
   ]
 };
@@ -70,11 +83,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* ✅ 2nd Line of Defense: Manual GTM/GA Script with 'beforeInteractive'.
-          This ensures the verification bot sees the ID in the raw HTML.
-        */}
+        {/* MANUAL GTM SCRIPT FOR GSC BOT RECOGNITION */}
         <Script
-          id="gtm-verification"
+          id="gtm-script"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -84,28 +95,36 @@ export default function RootLayout({ children }) {
             })(window,document,'script','dataLayer','GTM-N9ZFMR45');`,
           }}
         />
+        {/* MANUAL GA4 SCRIPT FOR GA METHOD VERIFICATION */}
+        <Script
+          id="ga4-script"
+          strategy="beforeInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-SY0JBTG97Y"
+        />
+        <Script
+          id="ga4-config"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date()); gtag('config', 'G-SY0JBTG97Y');`,
+          }}
+        />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans bg-background text-foreground`}
-      >
-        {/* ✅ GTM Noscript - Critical for GTM Method verification */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}>
+        {/* NOSCRIPT AT TOP OF BODY FOR GTM BOT VERIFICATION */}
         <noscript>
-          <iframe
+          <iframe 
             src="https://www.googletagmanager.com/ns.html?id=GTM-N9ZFMR45"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
+            height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}
+          />
         </noscript>
 
-        {/* ✅ Standard GA4 Loading for actual data tracking */}
-        <GoogleAnalytics gaId="G-SY0JBTG97Y" />
-
         <Script
-          id="atelier-structured-data"
+          id="enterprise-aeo-schema"
           type="application/ld+json"
           strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(atelierSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(enterpriseSchema) }}
         />
 
         <Navbar />
