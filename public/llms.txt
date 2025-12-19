@@ -1,59 +1,69 @@
 # GodFirst Fashion
 
-GodFirst Fashion merges African aesthetics with English tailoring, creating luxury menswear that speaks with authority and elegance. The brand offers bespoke services and corporate solutions, emphasizing craftsmanship and high-quality fabrics to cater to discerning clients and businesses alike.
+GodFirst Fashion is a luxury menswear brand that merges African aesthetics with English tailoring. Focused on providing elegant, bespoke clothing, the brand emphasizes the importance of character in fashion. GodFirst aims to serve discerning clients looking for timeless pieces that reflect both cultural heritage and sophisticated style.
 
 ## About Us
 
-### Our Heritage
-Founded on integrity and excellence, GodFirst Fashion embodies a legacy that intertwines regal African traditions with refined English tailoring. The brand believes that clothing communicates character, aiming to empower men through stylish, carefully crafted attire.
+GodFirst Fashion is built on **integrity** and **excellence**, combining the rich traditions of African design with the precision of English craftsmanship. The brand believes in the power of clothing as a form of expression, aiming for each piece to embody authority, class, and understated elegance.
 
 ### Corporate Excellence
-In addition to luxury fashion, GodFirst provides corporate garment solutions, including premium uniforms for high-end restaurants and multinational corporations. Key services include:
-- **Custom Brand Identity Integration**
-- **Durable, High-Quality Fabrics**
-- **Scalable Production for Large Teams**
+In addition to individual luxury wear, GodFirst offers premium uniforms tailored for high-end establishments, including:
+- Custom Brand Identity Integration
+- Durable, High-Quality Fabrics
+- Scalable Production for Large Teams
 
 ## Private Consultation
 
+GodFirst invites clients to initiate their bespoke journey through private consultations with skilled ateliers. Each garment is crafted with intention and precision.
+
 ### The Bespoke Experience
-GodFirst offers a tailored consultation service for clients looking to create bespoke garments. Each appointment is focused on individual measurement and fitting needs to ensure a personalized experience. Prospective clients can schedule a consultation by providing their details, including preferred date and service type.
+Clients can request consultations to discuss measurements, fittings, and styling preferences. **Appointments are necessary** to ensure personalized service.
 
 ## Collections
 
-### The Archive
-Explore the GodFirst collections, including:
-- **The Sovereign Line**: An homage to royalty using rich fabrics and intricate embroidery, priced between ₦120,000 and ₦350,000.
-- **The African Native Elegance** and **Bespoke Suits & Foreign Heritage**: Traditional pieces combined with modern styling for a unique fashion statement.
-- **The Corporate Maestro**: Elegantly tailored suits designed for the corporate world.
+GodFirst showcases an anthology of fashion that weaves cultural narratives into each collection.
 
-## The Philosophy
+### The Sovereign Line
+This collection celebrates royalty with meticulously crafted garments designed from rich fabrics and intricate embroidery. Prices range from **₦120,000 – ₦350,000**.
 
-### Timeless Elegance
-GodFirst Fashion is dedicated to creating garments that reflect luxury and timelessness, ensuring that each piece stands out for its artistry and character. The brand’s heritage series emphasizes a blend of traditional and contemporary styles, aiming to cater to the modern gentleman.
+## The Concierge
 
-## Atelier & Contact
-
-### The Concierge
-GodFirst's team is ready to assist clients with bespoke, ceremonial, or corporate inquiries. Consultations are by appointment only, with contact options including phone and email. The atelier is located in Ikeja, Lagos.
-
-- **Phone**: +234 802 382 8071
+GodFirst's concierge team provides guidance for bespoke, ceremonial, and corporate inquiries. Clients can schedule appointments to visit the atelier located in Ikeja, Lagos. Communication channels include:
+- **Telephone**: +234 802 382 8071
 - **Email**: concierge@godfirstfashion.com.ng
+
+### Inquiry Types
+Clients can select from various inquiry types when reaching out, whether for consultations, weddings, corporate engagements, or general inquiries.
+
+## Home Page
+
+The home page showcases the pinnacle of men's fashion where **native heritage** meets **English sophistication**. The brand philosophy emphasizes that fashion is a representation of character and strives for luxury, elegance, and timelessness.
+
+### Latest Collections
+Featured collections include:
+- The African Native Elegance
+- Bespoke Suits & Foreign Heritage
+- The Corporate Maestro
 
 ## Lookbook
 
-### Editorial Series
-GodFirst presents various themed lookbooks showcasing style narratives focused on modern elegance, faith, and cultural heritage.
+The lookbook section presents editorial series that capture visual impressions of GodFirst's fashion narratives, including themes that highlight contemporary African style and royal traditions.
 
-## Products
+## Product Offerings
 
-### Featured Items
-- **The Mayfair Tuxedo**: Priced at ₦320,000, this tuxedo exemplifies British tailoring with luxurious materials and artisanal craftsmanship.
-- **The Royal Agbada**: A ceremonial agbada priced at ₦320,000, showcasing hand-stitched silk with intricate embroidery.
-- **The Unity Kaftan**: Available for ₦120,000, celebrating unity through traditional Adinkra symbols.
+GodFirst offers a selection of handcrafted, bespoke pieces, each telling its own narrative:
 
-Each piece is made to order with limited production, emphasizing quality and personalization.
+### The Mayfair Tuxedo
+A peak lapel tuxedo crafted from Italian Super 150s wool, available for **₦320,000**.
 
-### Links
-- [View Collections](/collections)
-- [Book Consultation](/booking)
-- [Request Inquiry](https://wa.me/2348089123538)
+### The Royal Agbada
+A hand-stitched silk agbada with gold embroidery, also priced at **₦320,000**.
+
+### The Unity Kaftan
+Featuring intricate Adinkra symbol embroidery, this ceremonial kaftan is offered for **₦120,000**.
+
+Each piece can be commissioned through concierge services, with a standard production timeline of 14—21 business days.
+
+---
+
+For more information or to explore collections, visit [GodFirst Fashion](http://yourwebsite.com).
